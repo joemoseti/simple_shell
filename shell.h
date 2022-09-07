@@ -1,61 +1,50 @@
-#ifndef SHELL_H
-#define SHELL_H
+#ifndef HOLBERTON_H
+#define HOLBERTON_H
 
-#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
-#include <sys/wait.h>
 #include <sys/stat.h>
-#include <time.h>
-#include <stdbool.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <fcntl.h>
+#include <string.h>
+#include <signal.h>
 
-/* environment variables */
 extern char **environ;
-extern __sighandler_t signal(int __sig, __sighandler_t __handler);
 
-/* handle built ins */
-int checker(char **cmd, char *buf);
-void prompt_user(void);
-void handle_signal(int m);
-char **tokenizer(char *line);
-char *test_path(char **path, char *command);
-char *append_path(char *path, char *command);
-int handle_builtin(char **command, char *line);
-void exit_cmd(char **command, char *line);
+/* PATH Shell Functions */
 
-void print_env(void);
+/* Program Flow */
 
-/* string handlers */
-int _strcmp(char *s1, char *s2);
+int prompt(void);
+char *_read(void);
+char *_fullpathbuffer(char **av, char *PATH, char *copy);
+int checkbuiltins(char **av, char *buffer, int exitstatus);
+int _forkprocess(char **av, char *buffer, char *fullpathbuffer);
+
+/* String Helper Functions */
+
+char *_strdup(char *str);
+int _splitstring(char *str);
+int _strcmp(const char *s1, const char *s2);
+char *_strcat(char *dest, char *src);
 int _strlen(char *s);
-int _strncmp(char *s1, char *s2, int n);
-char *_strdup(char *s);
-char *_strchr(char *s, char c);
 
-void execution(char *cp, char **cmd);
-char *find_path(void);
+/*Tokenize & PATH Helper Functions*/
 
-/* helper function for efficient free */
-void free_buffers(char **buf);
+char **tokenize(char *buffer);
+int _splitPATH(char *str);
+int _PATHstrcmp(const char *s1, const char *s2);
+char *_concat(char *tmp, char **av, char *tok);
 
-struct builtin
-{
-	char *env;
-	char *exit;
-} builtin;
+/*Other Helper Funcs*/
 
-struct info
-{
-	int final_exit;
-	int ln_count;
-} info;
+char *_getenv(const char *name);
+int _env(void);
+void _puts(char *str);
+int _putchar(char c);
+char *_memset(char *s, char b, unsigned int n);
 
-struct flags
-{
-	bool interactive;
-} flags;
-
-#endif /* SHELL_H */
+#endif /* HOLBERTON_H */
