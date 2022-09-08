@@ -5,6 +5,7 @@
  * @argv: values received from the command line
  * @env: number of values received from the command line
  * Return: zero on succes.
+ * Authors: victor kaimoi && joel moseti
  */
 int main(int argc, char *argv[], char *env[])
 {
